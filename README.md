@@ -76,7 +76,7 @@ Systemet består af 4 containers:
 
 ``app_service`` og ``test_service`` containerene bliver begge startet fra ``app_image``, der bliver bygget ud fra ``Dockerfile``. ``postgres_db_service`` og ``pgadmin_service`` bliver startet fra images hentet fra Docker Hub.
 
-Data fra databasen i ``postgres_db_service`` bliver gemt i ``postgres_data`` volume. ``pgadmin_service`` genner config data i ``pg_admin`` volume.
+Data fra databasen i ``postgres_db_service`` bliver gemt i ``postgres_data`` volume. ``pgadmin_service`` gemmer config data i ``pg_admin`` volume.
 
 ---
 ## Fil overview
