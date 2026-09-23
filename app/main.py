@@ -4,9 +4,9 @@ from app.database import get_connection
 def main():
     print("Hello from Python!")
 
-    connection = get_connection()
 
     try:
+        connection = get_connection()
         print("Connected to PostgreSQL!")
     finally:
         connection.close()

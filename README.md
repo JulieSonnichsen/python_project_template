@@ -74,7 +74,7 @@ Systemet består af 4 containers:
 - ``postgres_db_service`` containeren kører databasen
 - ``pgadmin_service`` containeren kører pgAdmin applikationen
 
-``app_service`` og ``test_service`` containerene bliver begge startet fra ``app_image``, der bliver bygget ud fra ``Dockerfile``. ``postgres_db_service`` og ``pgadmin_service`` bliver startet fra images hentet fra Docker Hub.
+``app_service`` og ``test_service`` containerene bliver begge startet fra ``app_image``, der bliver bygget ud fra ``Dockerfile``. ``postgres_db_service`` og ``pgadmin_service`` bliver startet fra images (``postgres:16`` og ``dpage/pgadmin4``) hentet fra Docker Hub.
 
 Data fra databasen i ``postgres_db_service`` bliver gemt i ``postgres_data`` volume. ``pgadmin_service`` gemmer config data i ``pg_admin`` volume.
 
@@ -134,8 +134,9 @@ Løsningen er en Dev Container, som er en Docker container, hvor ens dependencie
 1. Sørg for at Docker Desktop er åben i baggrunden
 2. Åben terminalen i projektets root mappe
 3. Brug kommandoen ``docker compose up --build app``
-	- ``postgres:16`` image bliver hentet fra Docker Hub og ``postgres_db_service`` containeren bliver startet
+	- ``postgres:16`` image bliver hentet fra Docker Hub *(ved første kørsel)* og ``postgres_db_service`` containeren bliver startet
 	- ``app image`` bliver bygget ud fra ``Dockerfile`` og ``app_service`` containeren bliver startet ud fra ``app_image``
+        - *(``app_image`` bliver kun genbygget, hvis der er sket ændringer, der nødtvendigøre det pga. caching)*
 4. Brug kommandoen ``docker compose down``
 	- ``postgres_db_service`` containeren og ``app_service`` containeren bliver stoppet.
 
@@ -144,8 +145,8 @@ Løsningen er en Dev Container, som er en Docker container, hvor ens dependencie
 
 1. Sørg for at Docker Desktop er åben i baggrunden.
 2. Åben terminalen i projektets root,
-3. Brug kommandoen ``docker compose run --build --rm tests
-	- ``postgres:16`` image bliver hentet fra Dockerhub og ``postgres_db_service`` containeren bliver startet.
+3. Brug kommandoen ``docker compose run --build --rm tests``
+	- ``postgres:16`` image bliver hentet fra Dockerhub *(ved første kørsel)* og ``postgres_db_service`` containeren bliver startet.
 	- ``app image`` bliver bygget ud fra ``Dockerfile`` og ``test_service`` containeren bliver startet ud fra ``app image``
 	- ``test_service`` containeren lukker automatisk efter kørsel pga. ``--rm`` flaget.
 4. Brug kommandoen ``docker compose down``
@@ -179,7 +180,7 @@ Det er forresten best practice at lave **version pinning** i sin ``requirements.
 # Docker / Docker Compose kommandoer
 
 - **Start ``app_service``:** ``docker compose up --build app``
-- **Kør ``test_service``:** ``docker compose run --build --rm tests
+- **Kør ``test_service``:** ``docker compose run --build --rm tests``
 - **Stop services:** ``docker compose down``
 - **Stop services og slet volumes:** ``docker compose down -v``
 - **Start ``pgadmin_service``:** ``docker compose up -d pgadmin``
